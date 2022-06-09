@@ -4,21 +4,25 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 const SearchInput = (props) => {
     const options = ['multi', 'movie', 'tv'];
+    const errors = props.errors;
     
     return(
         <VStack mx={'8%'} my={8} alignItems={'center'}>
-        <FormControl isRequired>
+        <FormControl isRequired isInvalid={'query' in errors}>
             <FormControl.Label>Search Movie/TV Show Name</FormControl.Label>
             <Input value={props.query} style={styles.height} 
-            onChange={props.handleTextInput}
-            placeholder='i.e. James Bond, CSI'
-            InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
-            size={5} ml="2" color="muted.400" />}/>
+                onChange={props.handleTextInput}
+                placeholder='i.e. James Bond, CSI'
+                InputLeftElement={<Icon as={<MaterialIcons name="search" />} 
+                size={5} ml="2" color="muted.400" />}/>
+            {"query" in errors ? <FormControl.ErrorMessage>
+            Please enter a search term.
+            </FormControl.ErrorMessage> : null}
         </FormControl> 
 
-        <HStack w='100%' justifyContent='flex-start' alignItems='flex-end' mb='6' space={2}>
+        <HStack w='100%' justifyContent='flex-start' alignItems='center' mb='6' space={2}>
             <Box w='70%'>
-                <FormControl isRequired>
+                <FormControl isRequired isInvalid={'filter' in errors}>
                     <FormControl.Label>Choose Search Type</FormControl.Label>
                     <Select style={styles.height} selectedValue={props.filter} mx={{
                             base: 0,
@@ -35,12 +39,15 @@ const SearchInput = (props) => {
                             <Select.Item key={option} label={option} value={option}/>
                         ))}
                     </Select>
-                    <FormControl.ErrorMessage>
+                    {"filter" in errors ? <FormControl.ErrorMessage>
                     Please select a search type.
-                    </FormControl.ErrorMessage>
+                    </FormControl.ErrorMessage> :                     
+                    <FormControl.HelperText>
+                        Please select a filter for your search.
+                    </FormControl.HelperText>}
                 </FormControl>
             </Box>
-            <Button startIcon={<Icon as={<MaterialIcons name="search" />} size={5} />}
+            <Button justifyContent={'center'} startIcon={<Icon as={<MaterialIcons name="search" />} size={5} />}
                 style={styles.height} 
                 w='30%' h='50' 
                 onPress={props.getSearchResults}>Search</Button>
