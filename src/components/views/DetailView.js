@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const DetailView = ({route}) => {
 
-    const {id, title, poster_path, type} = route.params;
+    const {id, poster_path, type} = route.params;
     const [movieDetails, setMovieDetails] = useState({});
 
     useEffect(() => {
@@ -39,8 +39,9 @@ const DetailView = ({route}) => {
     return (
         <View style={{flex: 1}}>
             <ScrollView contentContainerStyle={styles.container}>
-                <Heading mb={5}>{title}</Heading>
-                <Image mb={8} source={{uri: `https://image.tmdb.org/t/p/original${poster_path}`}} alt={title} size="2xl"/>
+                <Heading textAlign={'center'} mb={5}>{movieDetails.title != null ? movieDetails.title : movieDetails.name}</Heading>
+                <Image mb={8} source={{uri: `https://image.tmdb.org/t/p/original${poster_path}`}} 
+                alt={movieDetails.title != null ? movieDetails.title : movieDetails.name} size="2xl"/>
                 <Text mb={8}>{movieDetails.overview}</Text>
                 <Text>Popularity: {movieDetails.popularity} | Release Date: {movieDetails.release_date}</Text>
             </ScrollView>
