@@ -3,8 +3,6 @@ import { StyleSheet, StatusBar, View } from 'react-native';
 import { NativeBaseProvider } from 'native-base';
 import AppStack from './src/components/stacks/AppStack';
 
-// const Stack = createNativeStackNavigator();
-
 export default function App() {
   return (
     <NativeBaseProvider>
